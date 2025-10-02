@@ -1,0 +1,30 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Gerar htpasswd",
+      "type": "process",
+      "command": "powershell",
+      "args": [
+        "-NoProfile",
+        "-ExecutionPolicy",
+        "Bypass",
+        "-Command",
+        "$P=((Get-Location).Path -replace '\\\\','/'); if(!(Test-Path 'nginx')){ New-Item -ItemType Directory nginx | Out-Null }; docker run --rm -v \"$P/nginx:/out\" alpine sh -lc \"apk add --no-cache apache2-utils >/dev/null && htpasswd -nbB uploader 'vmx30032' > /out/htpasswd && cat /out/htpasswd\""
+      ],
+      "options": { "cwd": "${workspaceFolder}" }
+    },
+    {
+      "label": "Up",
+      "type": "shell",
+      "command": "docker compose up -d",
+      "options": { "cwd": "${workspaceFolder}" }
+    },
+    {
+      "label": "Logs",
+      "type": "shell",
+      "command": "docker compose logs -f --tail=100",
+      "options": { "cwd": "${workspaceFolder}" }
+    }
+  ]
+}
