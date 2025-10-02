@@ -10,7 +10,7 @@ RUN mkdir -p /usr/share/nginx/html/firmware \
  && chown -R 101:101 /usr/share/nginx/html/firmware \
  && apk add --no-cache curl
 
-EXPOSE 80
+EXPOSE 8080
 
 # Healthcheck simples
 HEALTHCHECK --interval=30s --timeout=3s --retries=3 \
